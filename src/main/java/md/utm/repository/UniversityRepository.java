@@ -71,4 +71,20 @@ public class UniversityRepository {
         jdbcTemplate.update(sql, id);
     }
 
+    public boolean existById(Long id) {
+        String sql = "SELECT count(*) FROM university where id = ?";
+
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+
+        return count > 0;
+    }
+
+    public boolean existByShortName(String shortName) {
+        String sql = "SELECT count(*) FROM university where shortName = ?";
+
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, shortName);
+
+        return count > 0;
+    }
+
 }

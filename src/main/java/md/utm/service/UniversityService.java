@@ -2,6 +2,8 @@ package md.utm.service;
 
 import java.util.List;
 import md.utm.entity.University;
+import md.utm.exception.AlreadyExistException;
+import md.utm.exception.NotFoundException;
 import md.utm.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,20 @@ public class UniversityService {
         return universityRepository.findAll();
     }
 
-    public University fingById(Long id) {
+    public University findById(Long id) {
+        if(!universityRepository.existById(id)) {
+            throw new NotFoundException("Not found University with id: " + id);
+        }
+
         return universityRepository.findById(id);
     }
 
     public void create(University university) {
+        if(universityRepository.existByShortName(university.getShortName())) {
+            throw new AlreadyExistException(
+                    "Already exist university with shortName: " + university.getShortName());
+        }
+
         universityRepository.create(university);
     }
 

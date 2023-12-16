@@ -48,7 +48,7 @@ public class UniversityController {
 
     @GetMapping("/{id}")
     public University findById(@PathVariable Long id) {
-        return universityService.fingById(id);
+        return universityService.findById(id);
     }
 
     @PostMapping
